@@ -48,7 +48,7 @@ switch($request_method){
         $rs = mysqli_query($conn,$sql);
         if(mysqli_affected_rows($conn) > 0){
             http_response_code(200);
-            echo json_encode(array("message" => "Product was updated.", "type" => "success"));        
+            echo json_encode(array("message" => "Product was updated.", "type" => "info"));        
         }else{
             http_response_code(503);
             echo json_encode(array("message" => "Unable to update product.", "type" => "warning"));        
@@ -62,7 +62,7 @@ switch($request_method){
         $rs = mysqli_query($conn,$sql);
         if(mysqli_affected_rows($conn) > 0){
             http_response_code(200);
-            echo json_encode(array("message" => "Product was deleted.", "type" => "success"));        
+            echo json_encode(array("message" => "Product was deleted.", "type" => "info"));        
         }else{
             http_response_code(503);
             echo json_encode(array("message" => "Unable to deleted product.", "type" => "warning"));        
