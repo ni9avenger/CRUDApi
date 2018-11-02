@@ -55,6 +55,20 @@ switch($request_method){
         }
         break;
     case "delete":
+        header("Access-Control-Allow-Methods: POST");
+        header("Access-Control-Max-Age: 3600");
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        $sql = "DELETE FROM $table_name WHERE id = '$id'";
+        $rs = mysqli_query($conn,$sql);
+        if(mysqli_affected_rows($conn) > 0){
+            http_response_code(200);
+            echo json_encode(array("message" => "Product was deleted.", "type" => "success"));        
+        }else{
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to deleted product.", "type" => "warning"));        
+        }
+        break;
     default:
-        
+        http_response_code(404);
+        break;
 }
