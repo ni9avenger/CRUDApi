@@ -40,6 +40,20 @@ switch($request_method){
         }
         break;
     case "put":
+        header("Access-Control-Allow-Methods: POST");
+        header("Access-Control-Max-Age: 3600");
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        parse_str(file_get_contents("php://input"),$data);
+        $sql = "UPDATE $table_name SET name = '{$data['name']}',price = '{$data['price']}',description = '{$data['description']}' WHERE id = '{$data['id']}'";
+        $rs = mysqli_query($conn,$sql);
+        if(mysqli_affected_rows($conn) > 0){
+            http_response_code(200);
+            echo json_encode(array("message" => "Product was updated.", "type" => "success"));        
+        }else{
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to update product.", "type" => "warning"));        
+        }
+        break;
     case "delete":
     default:
         
