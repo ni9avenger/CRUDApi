@@ -25,6 +25,20 @@ switch($request_method){
         }
         break;
     case "post":
+        header("Access-Control-Allow-Methods: POST");
+        header("Access-Control-Max-Age: 3600");
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        parse_str(file_get_contents("php://input"),$data);
+        $sql = "INSERT INTO $table_name VALUES (null,'{$data['name']}','{$data['price']}','{$data['description']}')";
+        $rs = mysqli_query($conn,$sql);
+        if($rs > 0){
+            http_response_code(201);
+            echo json_encode(array("message" => "Product was created.", "type" => "success"));        
+        }else{
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to create product.", "type" => "warning"));        
+        }
+        break;
     case "put":
     case "delete":
     default:
