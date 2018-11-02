@@ -46,7 +46,7 @@ switch($request_method){
         parse_str(file_get_contents("php://input"),$data);
         $sql = "UPDATE $table_name SET name = '{$data['name']}',price = '{$data['price']}',description = '{$data['description']}' WHERE id = '{$data['id']}'";
         $rs = mysqli_query($conn,$sql);
-        if(mysqli_affected_rows($conn) > 0){
+        if(mysqli_affected_rows($conn) >= 0){
             http_response_code(200);
             echo json_encode(array("message" => "Product was updated.", "type" => "info"));        
         }else{
